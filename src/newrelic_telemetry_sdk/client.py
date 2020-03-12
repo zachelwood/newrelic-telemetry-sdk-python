@@ -224,3 +224,41 @@ class MetricClient(Client):
     HOST = "metric-api.newrelic.com"
     URL = "/metric/v1"
     PAYLOAD_TYPE = "metrics"
+
+
+class EventClient(Client):
+    """HTTP Client for interacting with the New Relic Event API
+
+    This class is used to send events to the New Relic Event API over HTTP.
+
+    :param insert_key: Insights insert key
+    :type insert_key: str
+    :param host: (optional) Override the host for the event API
+        endpoint.
+    :type host: str
+    :param compression_threshold: (optional) Compress if number of bytes in
+        payload is above this threshold. (Default: 64K)
+    :type compression_threshold: int
+
+    Usage::
+
+        >>> import os
+        >>> insert_key = os.environ.get("NEW_RELIC_INSERT_KEY", "")
+        >>> event_client = EventClient(insert_key)
+        >>> response = event_client.send({})
+    """
+
+    HOST = "insights-collector.newrelic.com"
+    URL = "/v1/accounts/0/events"
+
+    def send_batch(self, items):
+        payload = json.dumps(items)
+        if not isinstance(payload, bytes):
+            payload = payload.encode("utf-8")
+
+        headers = None
+        if len(payload) > self.compression_threshold:
+            payload = self._compress_payload(payload)
+            headers = self._gzip_headers
+
+        return self._pool.urlopen("POST", self.URL, body=payload, headers=headers)
