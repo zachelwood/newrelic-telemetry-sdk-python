@@ -251,7 +251,13 @@ class EventClient(Client):
     HOST = "insights-collector.newrelic.com"
     URL = "/v1/accounts/0/events"
 
-    def send_batch(self, items):
+    def send_batch(self, items, common=None):
+        if common:
+            items = list(items)
+            for index, item in enumerate(items):
+                updated = items[index] = dict(common)
+                updated.update(item)
+
         payload = json.dumps(items)
         if not isinstance(payload, bytes):
             payload = payload.encode("utf-8")
