@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from newrelic_telemetry_sdk.span_batch import SpanBatch
+from newrelic_telemetry_sdk.batch import SpanBatch
 
 
 class VerifyLockSpanBatch(SpanBatch):

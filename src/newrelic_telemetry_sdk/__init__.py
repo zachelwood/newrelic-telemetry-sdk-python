@@ -22,7 +22,7 @@ from newrelic_telemetry_sdk.span import Span
 from newrelic_telemetry_sdk.metric import GaugeMetric, CountMetric, SummaryMetric
 from newrelic_telemetry_sdk.event import Event
 from newrelic_telemetry_sdk.metric_batch import MetricBatch
-from newrelic_telemetry_sdk.span_batch import SpanBatch
+from newrelic_telemetry_sdk.batch import SpanBatch
 from newrelic_telemetry_sdk.harvester import Harvester
 
 try:
