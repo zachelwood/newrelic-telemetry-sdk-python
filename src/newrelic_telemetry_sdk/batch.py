@@ -14,8 +14,8 @@
 import threading
 
 
-class SpanBatch(object):
-    """Aggregates spans, providing a record / flush interface.
+class Batch(object):
+    """Implements aggregation, providing a record / flush interface.
 
     :param tags: (optional) A dictionary of tags to attach to all flushes.
     :type tags: dict
@@ -56,3 +56,11 @@ class SpanBatch(object):
 
         common = self._common and self._common.copy()
         return batch, common
+
+
+class SpanBatch(Batch):
+    """Aggregates spans, providing a record / flush interface.
+
+    :param tags: (optional) A dictionary of tags to attach to all flushes.
+    :type tags: dict
+    """
