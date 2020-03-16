@@ -249,7 +249,7 @@ class EventClient(Client):
     """
 
     HOST = "insights-collector.newrelic.com"
-    URL = "/v1/accounts/0/events"
+    URL = "/v1/accounts/events"
 
     def send_batch(self, items, common=None):
         if common:
